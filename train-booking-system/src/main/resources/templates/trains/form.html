@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Train Form</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+}</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <h1 class="brand">Train Booking System</h1>
+        <nav class="nav">
+            <a href="/users">Users</a>
+            <a href="/trains">Trains</a>
+            <a href="/tickets">Tickets</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card form-card">
+        <h2 th:if="${train.id == null}">Create Train</h2>
+        <h2 th:if="${train.id != null}">Edit Train</h2>
+
+        <form class="form-grid" th:action="${train.id == null} ? @{/trains} : @{/trains/update/{id}(id=${train.id})}"
+              th:object="${train}" method="post">
+            <label>
+                <span>Name</span>
+                <input type="text" th:field="*{name}" required />
+            </label>
+
+            <label>
+                <span>Source</span>
+                <input type="text" th:field="*{source}" required />
+            </label>
+
+            <label>
+                <span>Destination</span>
+                <input type="text" th:field="*{destination}" required />
+            </label>
+
+            <label>
+                <span>Base Price</span>
+                <input type="number" th:field="*{basePrice}" min="0" step="0.01" required />
+            </label>
+
+            <label>
+                <span>Discount Percentage</span>
+                <input type="number" th:field="*{discountPercentage}" min="0" max="100" step="0.01" />
+            </label>
+
+            <div class="form-actions">
+                <a class="btn btn-ghost" href="/trains">Cancel</a>
+                <button class="btn btn-primary" type="submit">Save Train</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container">&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Train Booking System</div>
+</footer>
+
+</body>
+</html>

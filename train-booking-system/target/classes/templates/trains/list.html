@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Trains</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <h1 class="brand">Train Booking System</h1>
+        <nav class="nav">
+            <a href="/users">Users</a>
+            <a href="/trains">Trains</a>
+            <a href="/tickets">Tickets</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card">
+        <div class="list-header">
+            <h2>Trains</h2>
+            <a class="btn btn-primary" href="/trains/new">Create Train</a>
+        </div>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Train ID</th>
+                        <th>Name</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Base Price</th>
+                        <th>Discount Percentage</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="train : ${trains}">
+                    <td th:text="${train.id}"></td>
+                    <td th:text="${train.name}"></td>
+                    <td th:text="${train.source}"></td>
+                    <td th:text="${train.destination}"></td>
+                    <td th:text="${train.basePrice}"></td>
+                    <td th:text="${train.discountPercentage}"></td>
+                    <td>
+                        <a class="btn btn-ghost" th:href="@{/trains/edit/{id}(id=${train.id})}">Edit</a>
+                        <a class="btn" style="border-color:transparent;color:#fff;background:#dc2626" th:href="@{/trains/delete/{id}(id=${train.id})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="container">&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Train Booking System</div>
+</footer>
+
+</body>
+
+</html>

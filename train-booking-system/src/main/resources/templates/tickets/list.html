@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tickets</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <h1 class="brand">Train Booking System</h1>
+        <nav class="nav">
+            <a href="/users">Users</a>
+            <a href="/trains">Trains</a>
+            <a href="/tickets">Tickets</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card">
+        <div class="list-header">
+            <h2>Tickets</h2>
+            <a class="btn btn-primary" href="/tickets/new">Book New Ticket</a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User Name</th>
+                        <th>Train Name</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Final Price</th>
+                        <th>Booking Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ticket : ${tickets}">
+                    <td th:text="${ticket.id}"></td>
+                    <td th:text="${ticket.user != null ? ticket.user.name : 'N/A'}"></td>
+                    <td th:text="${ticket.train != null ? ticket.train.name : 'N/A'}"></td>
+                    <td th:text="${ticket.train != null ? ticket.train.source : 'N/A'}"></td>
+                    <td th:text="${ticket.train != null ? ticket.train.destination : 'N/A'}"></td>
+                    <td th:text="${ticket.finalPrice}"></td>
+                    <td th:text="${ticket.bookingDate}"></td>
+                    <td>
+                        <a class="link" th:href="@{/tickets/edit/{id}(id=${ticket.id})}">Edit</a>
+                        <a class="link link-danger" th:href="@{/tickets/delete/{id}(id=${ticket.id})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container">&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Train Booking System</div>
+</footer>
+
+</body>
+</html>

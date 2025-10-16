@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>User Form</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <h1 class="brand">Train Booking System</h1>
+        <nav class="nav">
+            <a href="/users">Users</a>
+            <a href="/trains">Trains</a>
+            <a href="/tickets">Tickets</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card form-card">
+        <h2 th:if="${user.id == null}">Create User</h2>
+        <h2 th:if="${user.id != null}">Edit User</h2>
+
+        <form class="form-grid" th:action="${user.id == null} ? @{/users} : @{/users/update/{id}(id=${user.id})}" 
+              th:object="${user}" method="post">
+
+            <label>
+                <span>Name</span>
+                <input type="text" th:field="*{name}" required />
+            </label>
+
+            <label>
+                <span>Email</span>
+                <input type="email" th:field="*{email}" required />
+            </label>
+
+            <div class="form-actions">
+                <a class="btn btn-ghost" href="/users">Cancel</a>
+                <button class="btn btn-primary" type="submit">Save User</button>
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="container">&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Train Booking System</div>
+</footer>
+
+</body>
+
+</html>
